@@ -2,101 +2,29 @@ import React from 'react';
 import {Image, Dimensions, StyleSheet, View, TextInput } from 'react-native';
 
 import {MovieList} from '../components';
-import {search} from '../utils/MovieFetch';
-
-const demoList = [
-      {
-        "Title": "Blade Runner",
-        "Year": "1982",
-        "imdbID": "tt0083658",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BNzQzMzJhZTEtOWM4NS00MTdhLTg0YjgtMjM4MDRkZjUwZDBlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
-      },
-      {
-        "Title": "Blade Runner 2049",
-        "Year": "2017",
-        "imdbID": "tt1856101",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BNzA1Njg4NzYxOV5BMl5BanBnXkFtZTgwODk5NjU3MzI@._V1_SX300.jpg"
-      },
-      {
-        "Title": "Blade",
-        "Year": "1998",
-        "imdbID": "tt0120611",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BMTQ4MzkzNjcxNV5BMl5BanBnXkFtZTcwNzk4NTU0Mg@@._V1_SX300.jpg"
-      },
-      {
-        "Title": "Blade II",
-        "Year": "2002",
-        "imdbID": "tt0187738",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BOWVjZTIzNDYtNTBlNC00NTJjLTkzOTEtOTE0MjlhYzI2YTcyXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg"
-      },
-      {
-        "Title": "Blade: Trinity",
-        "Year": "2004",
-        "imdbID": "tt0359013",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BMjE0Nzg2MzI3MF5BMl5BanBnXkFtZTYwMjExODQ3._V1_SX300.jpg"
-      },
-      {
-        "Title": "Sling Blade",
-        "Year": "1996",
-        "imdbID": "tt0117666",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BNGY5NWIxMjAtODBjNC00MmZhLTk1ZTAtNGRhYThlOTNjMTQwXkEyXkFqcGdeQXVyNTc1NTQxODI@._V1_SX300.jpg"
-      },
-      {
-        "Title": "Dragon Blade",
-        "Year": "2015",
-        "imdbID": "tt3672840",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BMTk0MjgxOTQ5MF5BMl5BanBnXkFtZTgwODA3NTUwNjE@._V1_SX300.jpg"
-      },
-      {
-        "Title": "Shinobi: Heart Under Blade",
-        "Year": "2005",
-        "imdbID": "tt0475723",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BMjAxMjE1NTEyMF5BMl5BanBnXkFtZTcwMDgxODkzMQ@@._V1_SX300.jpg"
-      },
-      {
-        "Title": "Blade of the Immortal",
-        "Year": "2017",
-        "imdbID": "tt5084170",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BYzIwYmJlMjktMzJiMy00YmQzLThmNWYtNWY3NGViZjc4MzYwXkEyXkFqcGdeQXVyNDQxNjcxNQ@@._V1_SX300.jpg"
-      },
-      {
-        "Title": "Blade Runner: Black Out 2022",
-        "Year": "2017",
-        "imdbID": "tt7428594",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BZGNiNmNiMTctMDI4OS00OWYxLWE4ZWEtZjFkZjU4ZmY5YzEyXkEyXkFqcGdeQXVyMzgxODM4NjM@._V1_SX300.jpg"
-      }
-];
 
 export default class ListScreen extends React.Component {
   state = {
     text: '',
     items: [],
     loading: false,
-    listMessage: 'Make a search to see results'
+    listMessage: 'Make a search to see results (you need to submit)'
   }
   _onPress = (item) => this.props.navigation.navigate('Details', {...item})
 
   _search = async() => {
+    const {searchFactory} = this.props.screenProps;
+
     this.setState({loading: true});
     try {
       const {text} = this.state;
-      const items = await search(text);
+      const items = await searchFactory.search(text);
       // Set the message just in case it comes empty
       const listMessage = 'There were no results for that search'
       this.setState({items, listMessage, loading: false});
     } catch(e) {
       console.log(e);
-      this.setState({listMessage: 'There was an error'});
+      this.setState({listMessage: 'There was an error', loading: false});
     }
   }
 

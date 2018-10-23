@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import SettingsScreen from './screens/Settings';
 import ListScreen from './screens/List';
 import DetailsScreen from './screens/Details';
+import SearchFactory from './utils/MovieFetch';
 
 const primaryColor = 'tomato';
 const inactiveColor = 'grey';
@@ -72,9 +73,13 @@ const AppNavigator = createBottomTabNavigator(
 
 
 export default class App extends React.Component {
+  state = {
+    searchFactory: new SearchFactory()
+  }
+
   render() {
     return (
-      <AppNavigator styles={styles.container} />
+      <AppNavigator styles={styles.container} screenProps={this.state}/>
     );
   }
 }
