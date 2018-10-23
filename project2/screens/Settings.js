@@ -11,8 +11,6 @@ export default class SettingScreen extends React.Component {
 
     this.setState({selectedValue: itemValue});
     searchFactory.type = itemValue;
-
-    console.log('HOLAA', searchFactory)
   }
 
   render() {

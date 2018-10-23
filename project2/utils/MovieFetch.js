@@ -6,7 +6,6 @@ export default class SearchFactory {
 
     search = async (query) => {
         const url = `${BASE_URL}?plot=full&type=${this.type}&s=${query}&apiKey=${API_KEY}`;
-        console.log('HEY', url);
         try {
             const res = await fetch(url);
             const result = await res.json();
