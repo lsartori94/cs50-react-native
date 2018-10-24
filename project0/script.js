@@ -11,6 +11,14 @@ const itemCountSpan = document.getElementById('item-count')
 const uncheckedCountSpan = document.getElementById('unchecked-count')
 
 function newTodo() {
+  // get TODO label
+  const todoLabel = prompt('TODO Text');
+
+  // avoid creating empty TODOs and also handle cancel
+  if(todoLabel === null || !todoLabel && todoLabel === '') {
+    return
+  }
+
   const currentQuantity = parseInt(itemCountSpan.innerText);
   const uncheckedItems = parseInt(uncheckedCountSpan.innerText);
   const item = document.createElement('li');
@@ -18,9 +26,8 @@ function newTodo() {
   const checkbox = document.createElement('input');
   const deleteBtn = document.createElement('button');
 
-  // Set up the TODO text
   label.classList.add(classNames.TODO_TEXT);
-  label.innerText = prompt('TODO Text');
+  label.innerText = todoLabel;
 
   // Set up checkbox
   checkbox.classList.add(classNames.TODO_CHECKBOX);

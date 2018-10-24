@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import MovieListItem from './MovieListItem';
 
-export default class MovieList extends React.Component {
+export default class MovieList extends React.PureComponent {
     _keyExtractor = (item, index) => item['imdbID'];
 
     render() {
@@ -22,6 +22,8 @@ export default class MovieList extends React.Component {
                 data={this.props.items}
                 keyExtractor={this._keyExtractor}
                 renderItem={renderItem}
+                onEndReachedThreshold={0.5}
+                onEndReached={this.props.onEnd}
             />
         );
     }
@@ -31,4 +33,5 @@ MovieList.propTypes = {
     items: PropTypes.array,
     onItemPress: PropTypes.func,
     emptyMessage: PropTypes.string.isRequired,
+    onEnd: PropTypes.func
 }

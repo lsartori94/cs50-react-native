@@ -4,12 +4,13 @@ const API_KEY = '3836d307';
 export default class SearchFactory {
     type = 'movie';
 
-    search = async (query) => {
-        const url = `${BASE_URL}?plot=full&type=${this.type}&s=${query}&apiKey=${API_KEY}`;
+    search = async (query, page = 1) => {
+        const url = `${BASE_URL}?&page=${page}&plot=full&type=${this.type}&s=${query}&apiKey=${API_KEY}`;
+        console.log(url);
         try {
             const res = await fetch(url);
             const result = await res.json();
-            return result['Search'];
+            return result;
         } catch(e) {
             throw Error(e);
         }

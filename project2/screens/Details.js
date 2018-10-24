@@ -1,8 +1,6 @@
 import React from 'react';
 import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 
-import {getDetails} from '../utils/MovieFetch';
-
 export default class DetailsScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
     return {
@@ -23,8 +21,9 @@ export default class DetailsScreen extends React.Component {
   }
 
   setUp = async(id) => {
+    const {searchFactory} = this.props.screenProps;
     try {
-      const details = await getDetails(id);
+      const details = await searchFactory.getDetails(id);
       this.setState({item: details, loading: false});
     } catch(e) {
       console.log(e);

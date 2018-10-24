@@ -23,7 +23,6 @@ export default class SettingScreen extends React.Component {
           onValueChange={this._handleSelection}>
           <Picker.Item label="Movies" value="movie" />
           <Picker.Item label="Series" value="series" />
-          <Picker.Item label="Episodes" value="episode" />
         </Picker>
       </View>
     );
